@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const FormModal = () => {
@@ -6,7 +6,20 @@ const FormModal = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm(); 
+  const [start, setStart] = useState(10);
+  const [end, setEnd] = useState(0);
+  const [dateErr, setDateErr] = useState("");
+  const [valid, setValid] = useState(true);
+  useEffect(() => { 
+    if (end < start) { 
+      setValid(true)
+      setDateErr("");
+    } else {
+      setValid(false);
+      setDateErr("You can not close your shop before it starts")
+    }
+  }, [start, end])
   return (
     <div>
       <input type="checkbox" id="my-modal" className="modal-toggle" />
@@ -50,32 +63,71 @@ const FormModal = () => {
                 </span>
                  
               </label>
-              <select required
+              <select   required
                 className="select select-bordered bg-white text-slate-800 border-[#2155CD] w-full "
-                              {...register("loc", {
-                                  required: {
-                                      value: true, 
-                                      message: "you have to add this "
-                    }
-                })}
+                        {...register("location")}
               >
-                <option disabled selected>
+                <option  value="">
                   Pick one
                 </option>
-                <option>Thane</option>
-                <option>Pune</option>
-                <option>Mumbai Suburban</option>
-                <option>Nashik</option>
-                <option>Nagpur</option> 
-                <option>Ahmednagar</option> 
-                <option>Solapur</option> 
+                <option value="thane">Thane</option>
+                <option value="pune">Pune</option>
+                <option value="mumbai">Mumbai Suburban</option>
+                <option value="nashik">Nashik</option>
+                <option value="nagpur">Nagpur</option> 
+                <option value="ahmednagar">Ahmednagar</option> 
+                <option value="solapur">Solapur</option> 
               </select>
+             
+            </div>
+            <div className="form-control w-full mt-4 ">
               <label className="label">
-                <span className="label-text-alt text-red-700">  {errors.loc?.type === "required" &&
-                    "You have to put a name of the shop"} </span>
+                <span className="label-text font-medium text-slate-800 text-lg">
+                  Pick the catagory of the shop
+                </span>
+                 
+              </label>
+              <select   required
+                className="select select-bordered bg-white text-slate-800 border-[#2155CD] w-full "
+                        {...register("type")}
+              >
+                <option  value="">
+                  Pick one
+                </option>
+                <option value="grocery">Grocery</option>
+                <option value="butcher">Butcher</option>
+                <option value="baker">Baker</option>
+                <option value="chemist">Chemist</option>
+                <option value="stationary">Stationary shop</option> 
+               
+              </select>
+             
+            </div>
+            <div className="form-control w-full  ">
+              <label className="label">
+                <span className="label-text font-medium text-slate-800 text-lg">
+                  Enter shop's starting date:
+                </span>
+              </label>
+              <input type="date" onChange={e => setEnd(Date.parse(e.target.value))} className="input input-bordered bg-white border-[#2155CD] w-full  "required />
+               
+            </div>
+            <div className="form-control w-full  ">
+              <label className="label">
+                <span className="label-text font-medium text-slate-800 text-lg">
+                  Enter shop's Closing date:
+                </span>
+              </label>
+              <input type="date" onChange={e => setStart(Date.parse(e.target.value))} className="input input-bordered bg-white border-[#2155CD] w-full  " required/>
+              <label className="label">
+                <span className="label-text-alt text-red-700">
+                {dateErr}
+                </span>
               </label>
             </div>
-            <button type="submit">submit</button>
+            {
+              valid === true ? (<button className="btn" type="submit">submit</button>):(<button className="btn" disabled  type="submit">submit</button>)
+            }
           </form>
         </div>
       </div>
