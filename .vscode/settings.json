@@ -1,0 +1,7 @@
+{
+    "editor.fontFamily": "operator mono lig",
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact"
+    }
+}
+  
