@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addShop } from "../Reducers/Shops";
 
-const FormModal = () => {
+const Addshop = () => {
   const {
     register,
     formState: { errors },
@@ -15,6 +16,7 @@ const FormModal = () => {
   const [end, setEnd] = useState(0);
   const [dateErr, setDateErr] = useState("");
   const [valid, setValid] = useState(true);
+  const navigate = useNavigate();
   const onSubmit = (data) => {
     const { name, location, catagory } = data;
     const shop = {
@@ -25,13 +27,14 @@ const FormModal = () => {
       startingDate: start,
       closingDate: end,
     };
-    console.log(shop);
-    dispatch(addShop(shop))
+
+    dispatch(addShop(shop)); 
     reset();
   
+    navigate("/");
   };
   useEffect(() => {
-    if (end < start) {
+    if (end > start) {
       setValid(true);
       setDateErr("");
     } else {
@@ -41,9 +44,9 @@ const FormModal = () => {
   }, [start, end]);
   return (
     <div>
-      <input type="checkbox" id="my-modal" className="modal-toggle" />
-      <div className="modal ">
-        <div className="modal-box bg-white">
+     
+      <div className=" ">
+        <div className="modal-box bg-white mx-auto">
           <h3 className="font-bold text-2xl text-[#2155CD] ">Add a shop</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="  w-full  ">
@@ -87,13 +90,13 @@ const FormModal = () => {
                 {...register("location")}
               >
                 <option value="">Pick one</option>
-                <option value="thane">Thane</option>
-                <option value="pune">Pune</option>
-                <option value="mumbai">Mumbai Suburban</option>
-                <option value="nashik">Nashik</option>
-                <option value="nagpur">Nagpur</option>
-                <option value="ahmednagar">Ahmednagar</option>
-                <option value="solapur">Solapur</option>
+                <option value="Thane">Thane</option>
+                <option value="Pune">Pune</option>
+                <option value="Mumbai Suburban">Mumbai Suburban</option>
+                <option value="Nashik">Nashik</option>
+                <option value="Nagpur">Nagpur</option>
+                <option value="Ahmednagar">Ahmednagar</option>
+                <option value="Solapur">Solapur</option>
               </select>
             </div>
             <div className="  w-full mt-4 ">
@@ -108,11 +111,11 @@ const FormModal = () => {
                 {...register("catagory")}
               >
                 <option value="">Pick one</option>
-                <option value="grocery">Grocery</option>
-                <option value="butcher">Butcher</option>
-                <option value="baker">Baker</option>
-                <option value="chemist">Chemist</option>
-                <option value="stationary">Stationary shop</option>
+                <option value="Grocery">Grocery</option>
+                <option value="Butcher">Butcher</option>
+                <option value="Baker">Baker</option>
+                <option value="Chemist">Chemist</option>
+                <option value="Stationary Shop">Stationary shop</option>
               </select>
             </div>
             <div className="  w-full  ">
@@ -123,7 +126,7 @@ const FormModal = () => {
               </label>
               <input
                 type="date"
-                onChange={(e) => setEnd(Date.parse(e.target.value))}
+                onChange={(e) => setStart(Date.parse(e.target.value))}
                 className="input input-bordered bg-white border-[#2155CD] w-full  "
                 required
               />
@@ -136,7 +139,7 @@ const FormModal = () => {
               </label>
               <input
                 type="date"
-                onChange={(e) => setStart(Date.parse(e.target.value))}
+                onChange={(e) => setEnd(Date.parse(e.target.value))}
                 className="input input-bordered bg-white border-[#2155CD] w-full  "
                 required
               />
@@ -146,11 +149,11 @@ const FormModal = () => {
             </div>
             {valid === true ? (
               <div className="modal-action">
-                <button type="submit" className="mx-auto">
-                <label htmlFor="my-modal" className="btn btn-primary" type="submit">
+                
+                <button className="btn btn-primary" type="submit">
                  Add shop
-                </label>
                 </button>
+   
               </div>
             ) : (
               <button className="btn btn-disabled" disabled type="submit">
@@ -164,4 +167,4 @@ const FormModal = () => {
   );
 };
 
-export default FormModal;
+export default Addshop;

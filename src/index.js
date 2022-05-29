@@ -9,13 +9,14 @@ import shopReducer from "./Reducers/Shops";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import store from './ReduxStore'
+import { BrowserRouter } from "react-router-dom";
 let persistor = persistStore(store);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
             <PersistGate persistor={persistor}>
-                <App />
+               <BrowserRouter><App/> </BrowserRouter>
             </PersistGate>
         </Provider>
   </React.StrictMode>
