@@ -4,20 +4,14 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 const SingleShop = ({ shop }) => {
-  const date = Date.parse(new Date());
-  console.log(date);
+  const date = Date.parse(new Date()); 
   const isOpen = shop.startingDate < date && date < shop.closingDate;
-  console.log(
-    isOpen,
-    format(shop.startingDate, "PP"),
-    date,
-    format(shop.closingDate, "PP")
-  );
+  
 
   return (
     <div className="card w-full bg-white shadow-xl my-8">
       <div className="card-body">
-        <div className="flex flex-col md:flex-row justify-between md:items-end">
+        <div className="flex   justify-between items-end">
           <h2 className="card-title text-4xl text-left text-slate-700">
             {shop.name}
           </h2>
@@ -39,7 +33,7 @@ const SingleShop = ({ shop }) => {
             )}
           </div>
         </div>
-        <div className="flex flex-col md:flex-row justify-between md:items-end mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4">
           <div >
             <h3 className="text-xl font-medium text-slate-600 text-left">
               {" "}
@@ -48,7 +42,7 @@ const SingleShop = ({ shop }) => {
             </h3>
           </div>
           <div className="">
-            <h3 className="text-xl my-4 md:my-0 font-medium text-slate-600 text-left">
+            <h3 className="text-xl  font-medium text-slate-600 text-left">
               {" "}
               <BiCategory className="inline font-semibold mr-2 " />{" "}
               {shop.catagory}
