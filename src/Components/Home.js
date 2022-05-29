@@ -6,25 +6,33 @@ import SingleShop from "./SingleShop";
 
 const Home = () => {
   const shops = useSelector((state) => state.shops?.value);
-  const [isChecked, setIsChecked] = useState({ lodaded: true, checked: false});
+  const [isChecked, setIsChecked] = useState({ lodaded: true, checked: false });
   const [displayShops, setDisplayShops] = useState([...shops]);
   const date = Date.parse(new Date());
 
+  // while filering, this will filter if the shop is closed or not
   useEffect(() => {
     if (isChecked.lodaded === false) {
       if (isChecked.checked === true) {
-        const openedShops = shops.filter((shop) => shop.startingDate < date && date < shop.closingDate );
+        const openedShops = shops.filter(
+          (shop) => shop.startingDate < date && date < shop.closingDate
+        );
         setDisplayShops(openedShops);
       } else {
-        const openedShops = shops.filter((shop) => shop.startingDate > date || date > shop.closingDate );
+        const openedShops = shops.filter(
+          (shop) => shop.startingDate > date || date > shop.closingDate
+        );
         setDisplayShops(openedShops);
       }
     }
-    
-  },[isChecked])
+  }, [isChecked]);
+
+  // to display all shops after deleting one from the list
   useEffect(() => {
-     setDisplayShops(shops)
-   },[shops])
+    setDisplayShops(shops);
+  }, [shops]);
+
+  // creating a single form to prevent code duplication, this will be use to filter shops based on credentials
   const form = (
     <>
       <select
@@ -37,7 +45,7 @@ const Home = () => {
           setDisplayShops(found);
         }}
       >
-        <option disabled selected>
+        <option disabled defaultValue>
           By Location
         </option>
         <option value="Thane">Thane</option>
@@ -58,7 +66,7 @@ const Home = () => {
           setDisplayShops(found);
         }}
       >
-        <option disabled selected>
+        <option disabled defaultValue>
           By Category
         </option>
         <option value="Grocery">Grocery</option>
@@ -68,17 +76,20 @@ const Home = () => {
         <option value="Stationary Shop">Stationary shop</option>
       </select>
       <label htmlFor="isOpen" className="flex justify-start gap-2 md:mr-4 mt-2">
-      <input
-        className="checkbox"
-        name="isOpen"
-        type="checkbox"
-        checked={isChecked.checked}
-        onClick={()=> setIsChecked({lodaded:false, checked:!isChecked.checked})}
-      />  <h3 className=" text-md font-medium text-[#2155CD]">Currently Open</h3>
+        <input
+          className="checkbox"
+          name="isOpen"
+          type="checkbox"
+          defaultChecked={isChecked.checked}
+          onClick={() =>
+            setIsChecked({ lodaded: false, checked: !isChecked.checked })
+          }
+        />{" "}
+        <h3 className=" text-md font-medium text-[#2155CD]">Currently Open</h3>
       </label>
     </>
   );
- 
+
   return (
     <div className="mx-8">
       <section className="">
@@ -90,6 +101,7 @@ const Home = () => {
             >
               Filter
             </label>
+            {/* filter form for mobile devices  */}
             <form
               tabIndex="0"
               className="dropdown-content menu p-4 shadow text-[#2155CD] bg- rounded-box bg-white "
@@ -106,6 +118,7 @@ const Home = () => {
               </button>
             </form>
           </div>
+          {/* filter form for large devices */}
           <form action="" className="justify-start items-end hidden md:flex">
             <h3 className="block text-[#2155CD] text-5xl font-medium mr-2">
               Filter:
@@ -115,7 +128,7 @@ const Home = () => {
               className="btn text-[#79DAE8] bg-[#2155CD] text-sm px-4 py-2 mt-2 rounded-md md:text-xl font-semibold"
               onClick={(e) => {
                 e.preventDefault();
-                setDisplayShops(shops);
+                setDisplayShops(shops); // will reset all filter credentials
               }}
             >
               Reset Filters
@@ -124,6 +137,7 @@ const Home = () => {
           <Link
             to="/shops/add"
             className="btn text-[#79DAE8] bg-[#2155CD] text-sm px-4 py-2 rounded-md md:text-xl font-semibold"
+            // link to add shop page to add a new shop
           >
             Add A new shop
           </Link>
@@ -132,6 +146,7 @@ const Home = () => {
       </section>
       <section className="mt-8 container mx-auto">
         {displayShops.map((shop) => (
+          // to display every shop that needs to be displayed based on filter(if applicable)
           <SingleShop shop={shop} key={shop.id} />
         ))}
       </section>

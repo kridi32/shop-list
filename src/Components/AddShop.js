@@ -9,7 +9,7 @@ const Addshop = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm();
   const dispatch = useDispatch();
   const [start, setStart] = useState(10);
@@ -17,22 +17,24 @@ const Addshop = () => {
   const [dateErr, setDateErr] = useState("");
   const [valid, setValid] = useState(true);
   const navigate = useNavigate();
+  // handling submit button
   const onSubmit = (data) => {
     const { name, location, catagory } = data;
+    // creating the shop object to save that on redux store
     const shop = {
-      id: Math.ceil(Math.random()*10000000).toString(),
+      id: Math.ceil(Math.random() * 10000000).toString(),
       name,
       location,
       catagory,
       startingDate: start,
       closingDate: end,
     };
-
-    dispatch(addShop(shop)); 
+    dispatch(addShop(shop));
     reset();
-  
     navigate("/");
   };
+
+  //validating dates
   useEffect(() => {
     if (end > start) {
       setValid(true);
@@ -44,11 +46,14 @@ const Addshop = () => {
   }, [start, end]);
   return (
     <div>
-     
       <div className=" ">
         <div className="modal-box bg-white mx-auto">
           <h3 className="font-bold text-2xl text-[#2155CD] ">Add a shop</h3>
+
+          {/* input form, all inputs is required to submit  */}
           <form onSubmit={handleSubmit(onSubmit)}>
+
+            {/* getting the name of the shop  */}
             <div className="  w-full  ">
               <label className="label">
                 <span className="label-text font-medium text-slate-800 text-lg">
@@ -66,11 +71,12 @@ const Addshop = () => {
                   },
                   pattern: {
                     value: /^[A-Za-z ]+$/,
-                    message: "error message", // JS only: <p>error message</p> TS only support string
+                    //validation of the name of the shop that can only include alphabets
                   },
                 })}
               />
               <label className="label">
+                {/* display errors if occurs */}
                 <span className="label-text-alt text-red-700">
                   {errors.name?.type === "pattern" && "The name is invalid"}{" "}
                   {errors.name?.type === "required" &&
@@ -78,6 +84,8 @@ const Addshop = () => {
                 </span>
               </label>
             </div>
+
+            {/* getting location data of the shop  */}
             <div className="  w-full ">
               <label className="label">
                 <span className="label-text font-medium text-slate-800 text-lg">
@@ -99,6 +107,8 @@ const Addshop = () => {
                 <option value="Solapur">Solapur</option>
               </select>
             </div>
+
+            {/* getting catagory data of the shop  */}
             <div className="  w-full mt-4 ">
               <label className="label">
                 <span className="label-text font-medium text-slate-800 text-lg">
@@ -118,6 +128,8 @@ const Addshop = () => {
                 <option value="Stationary Shop">Stationary shop</option>
               </select>
             </div>
+
+            {/* collecting starting and closing date and storing as number for validation  */}
             <div className="  w-full  ">
               <label className="label">
                 <span className="label-text font-medium text-slate-800 text-lg">
@@ -147,13 +159,13 @@ const Addshop = () => {
                 <span className="label-text-alt text-red-700">{dateErr}</span>
               </label>
             </div>
+
+            {/* the add button will only enable if user provides valid dates on the input  */}
             {valid === true ? (
               <div className="modal-action">
-                
                 <button className="btn btn-primary" type="submit">
-                 Add shop
+                  Add shop
                 </button>
-   
               </div>
             ) : (
               <button className="btn btn-disabled" disabled type="submit">

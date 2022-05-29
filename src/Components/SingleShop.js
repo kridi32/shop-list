@@ -1,19 +1,19 @@
-import { format } from "date-fns/esm";
 import React from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteShop } from "../Reducers/Shops";
+
 const SingleShop = ({ shop }) => {
-  // const date = Date.parse(new Date()); 
-  // const isOpen = shop.startingDate < date && date < shop.closingDate;
-  const dispatch = useDispatch()
+  const shops = useSelector((state) => state.shops?.value);
+  const dispatch = useDispatch();
   const date = new Date();
   return (
     <div className="card w-full bg-white shadow-xl my-8">
-      <div className="card-body">
-        <div className="flex   justify-between items-end">
+      <div className="card-body"> 
+        {/* top part with the shop name and disply if it is open of closed  */}
+        <div className="flex justify-between items-end">
           <h2 className="card-title text-4xl text-left text-slate-700">
             {shop.name}
           </h2>
@@ -35,8 +35,9 @@ const SingleShop = ({ shop }) => {
             )}
           </div>
         </div>
+        {/* below top to display shops location and catagory with a delete button to delete this from the list  */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 md:mt-12">
-          <div >
+          <div>
             <h3 className="text-xl font-medium text-slate-600 text-left">
               {" "}
               <HiOutlineLocationMarker className="inline font-semibold mr-2 " />
@@ -50,11 +51,16 @@ const SingleShop = ({ shop }) => {
               {shop.catagory}
             </h3>
           </div>
-          <div className="md:flex md:justify-end"> 
-            <button className="btn btn-error w-full md:w-auto" onClick={(e) => {
-            
-              dispatch(deleteShop(shop))
-            }}>Delete</button>
+          <div className="md:flex md:justify-end">
+            <button
+              className="btn btn-error w-full md:w-auto"
+              onClick={(e) => {
+                const index = shops.indexOf(shop)
+                dispatch(deleteShop(index))
+              }}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
