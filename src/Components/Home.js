@@ -22,12 +22,9 @@ const Home = () => {
     }
     
   },[isChecked])
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm();
+  useEffect(() => {
+     setDisplayShops(shops)
+   },[shops])
   const form = (
     <>
       <select
