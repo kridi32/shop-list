@@ -1,22 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import shopReducer from './Reducers/Shops'
-const store = configureStore({
-  reducer: {
-    shops: shopReducer,
-   }
- })
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import shopReducer from "./Reducers/Shops";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import store from './ReduxStore'
+let persistor = persistStore(store);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App /> 
-     </Provider>
+            <PersistGate persistor={persistor}>
+                <App />
+            </PersistGate>
+        </Provider>
   </React.StrictMode>
 );
 
