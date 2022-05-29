@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import "./App.css";
 import FormModal from "./Components/FormModal";
 
 function App() {
+  const shops = useSelector((state) => state.shops.value);
+  console.log(shops)
   return (
     <main className="App bg-[#E8F9FD]   min-h-screen w-screen">
       {/* main heading */}
@@ -12,11 +15,11 @@ function App() {
       <section className="container mx-auto">
         <div className="flex w-full items-center justify-between mt-8 mb-2">
           <div className="dropdown dropdown-right md:hidden">
-            <label tabindex="0" className="btn text-[#79DAE8] bg-[#2155CD] text-sm px-4 py-2 rounded-md md:text-xl font-semibold">
+            <label tabIndex="0" className="btn text-[#79DAE8] bg-[#2155CD] text-sm px-4 py-2 rounded-md md:text-xl font-semibold">
               Filter
             </label>
             <ul
-              tabindex="0"
+              tabIndex="0"
               className="dropdown-content menu p-4 shadow text-[#2155CD] bg- rounded-box bg-white "
             >
               <select className="select border border-[#79DAE8]  w-48 h-6 mb-2 text-[#2155CD]  bg-white">
