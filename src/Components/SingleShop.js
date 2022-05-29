@@ -4,8 +4,8 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsFillBookmarkCheckFill, BsFillBookmarkXFill } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 const SingleShop = ({ shop }) => {
-  const date = Date.parse(new Date()); 
-  const isOpen = shop.startingDate < date && date < shop.closingDate;
+  // const date = Date.parse(new Date()); 
+  // const isOpen = shop.startingDate < date && date < shop.closingDate;
   
 
   return (
@@ -16,7 +16,7 @@ const SingleShop = ({ shop }) => {
             {shop.name}
           </h2>
           <div className="flex gap-4 ">
-            {isOpen ? (
+            {shop.isOpen ? (
               <div className="badge badge-success uppercase text-md py-4 px-4   md:mt-0 mt-2 font-medium  opacity-80">
                 {" "}
                 <BsFillBookmarkCheckFill /> <span className="ml-2">
